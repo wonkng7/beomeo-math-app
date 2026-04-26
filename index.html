@@ -12,6 +12,7 @@
     --surface2: #222636;
     --border: #2e3347;
     --accent: #5b7cfa;
+    --accent2: #7c5bfa;
     --green: #4ade80;
     --yellow: #fbbf24;
     --red: #f87171;
@@ -22,19 +23,45 @@
     --radius-sm: 8px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; align-items:center; justify-content:center; }
-  .loading { text-align:center; padding:40px; }
-  .loading h1 { font-size:24px; color:var(--accent); margin-bottom:16px; }
-  .loading p { color:var(--text2); }
-  .spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 1s linear infinite; margin:20px auto; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-</style>
-</head>
-<body>
-<div class="loading">
-  <div class="spinner"></div>
-  <h1>📐 범어수학 관리시스템</h1>
-  <p>전체 파일 업로드 중... 잠시만 기다려주세요</p>
-</div>
-</body>
-</html>
+  body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* ── 레이아웃 ── */
+  #app { display:flex; min-height:100vh; }
+
+  /* ── 사이드바 ── */
+  #sidebar {
+    width:220px; min-width:220px; background:var(--surface);
+    border-right:1px solid var(--border);
+    display:flex; flex-direction:column;
+    position:fixed; top:0; left:0; height:100vh; z-index:100;
+    transition: transform .3s;
+  }
+  .sidebar-logo {
+    padding:24px 20px 16px;
+    border-bottom:1px solid var(--border);
+  }
+  .sidebar-logo h1 { font-size:16px; font-weight:700; color:var(--accent); letter-spacing:-.3px; }
+  .sidebar-logo p { font-size:11px; color:var(--text3); margin-top:3px; }
+  .sidebar-nav { flex:1; padding:12px 0; overflow-y:auto; }
+  .nav-item {
+    display:flex; align-items:center; gap:10px;
+    padding:10px 20px; cursor:pointer;
+    font-size:13.5px; color:var(--text2);
+    border-left:3px solid transparent;
+    transition: all .15s;
+  }
+  .nav-item:hover { color:var(--text); background:var(--surface2); }
+  .nav-item.active { color:var(--accent); border-left-color:var(--accent); background:rgba(91,124,250,.08); }
+  .nav-icon { font-size:16px; width:20px; text-align:center; }
+  .sidebar-footer { padding:16px 20px; border-top:1px solid var(--border); }
+  .sync-btn {
+    width:100%; padding:9px; border-radius:var(--radius-sm);
+    background:var(--accent); color:#fff; border:none;
+    font-size:12.5px; font-family:inherit; cursor:pointer;
+    font-weight:500; transition: opacity .15s;
+  }
+  .sync-btn:hover { opacity:.85; }
+  .sync-status { font-size:11px; color:var(--text3); text-align:center; margin-top:8px; }
+
+  /* ── 메인 ── */
+  #main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
