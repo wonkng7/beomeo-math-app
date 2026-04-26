@@ -4,8 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>범어수학 관리시스템</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222636;
+    --border: #2e3347;
+    --accent: #5b7cfa;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #e8eaf0;
+    --text2: #8b90a7;
+    --text3: #555a72;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .loading { text-align:center; padding:40px; }
+  .loading h1 { font-size:24px; color:var(--accent); margin-bottom:16px; }
+  .loading p { color:var(--text2); }
+  .spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 1s linear infinite; margin:20px auto; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
 </head>
 <body>
-<h1>업로드 완료 - 전체 파일 로딩 중...</h1>
+<div class="loading">
+  <div class="spinner"></div>
+  <h1>📐 범어수학 관리시스템</h1>
+  <p>전체 파일 업로드 중... 잠시만 기다려주세요</p>
+</div>
 </body>
 </html>
