@@ -65,3 +65,1183 @@
 
   /* ── 메인 ── */
   #main { margin-left:220px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
+  .topbar {
+    padding:16px 28px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--surface); position:sticky; top:0; z-index:50;
+  }
+  .topbar h2 { font-size:17px; font-weight:600; }
+  .topbar-actions { display:flex; gap:10px; align-items:center; }
+  .btn {
+    padding:8px 16px; border-radius:var(--radius-sm);
+    font-size:13px; font-family:inherit; cursor:pointer;
+    border:none; font-weight:500; transition: all .15s;
+  }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { opacity:.85; }
+  .btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); }
+  .btn-ghost:hover { color:var(--text); border-color:var(--text3); }
+  .btn-danger { background:rgba(248,113,113,.12); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+
+  .content { padding:24px 28px; flex:1; }
+
+  /* ── 카드 ── */
+  .card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius); padding:20px;
+  }
+  .card-title { font-size:13px; color:var(--text2); font-weight:500; margin-bottom:16px; text-transform:uppercase; letter-spacing:.5px; }
+
+  /* ── 대시보드 ── */
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:24px; }
+  .stat-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius); padding:18px 20px;
+  }
+  .stat-val { font-size:28px; font-weight:700; font-family:'DM Mono',monospace; }
+  .stat-label { font-size:12px; color:var(--text2); margin-top:4px; }
+  .stat-accent { color:var(--accent); }
+  .stat-green { color:var(--green); }
+  .stat-yellow { color:var(--yellow); }
+
+  .dashboard-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .recent-list { list-style:none; }
+  .recent-item {
+    padding:10px 0; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:12px; font-size:13.5px;
+  }
+  .recent-item:last-child { border-bottom:none; }
+  .recent-badge {
+    padding:2px 8px; border-radius:20px; font-size:11px; font-weight:500;
+    background:rgba(91,124,250,.15); color:var(--accent); white-space:nowrap;
+  }
+  .recent-text { flex:1; }
+  .recent-sub { font-size:11px; color:var(--text3); margin-top:2px; }
+
+  /* ── 테이블 ── */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  thead tr { border-bottom:2px solid var(--border); }
+  th { padding:10px 14px; text-align:left; font-size:11.5px; color:var(--text3); font-weight:500; text-transform:uppercase; letter-spacing:.4px; white-space:nowrap; }
+  td { padding:11px 14px; border-bottom:1px solid var(--border); }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:var(--surface2); }
+  .tag {
+    display:inline-block; padding:2px 8px; border-radius:20px;
+    font-size:11px; font-weight:500;
+  }
+  .tag-blue { background:rgba(91,124,250,.15); color:var(--accent); }
+  .tag-green { background:rgba(74,222,128,.12); color:var(--green); }
+  .tag-yellow { background:rgba(251,191,36,.12); color:var(--yellow); }
+  .tag-red { background:rgba(248,113,113,.12); color:var(--red); }
+  .tag-gray { background:var(--surface2); color:var(--text2); }
+  .row-actions { display:flex; gap:6px; }
+  .icon-btn {
+    width:28px; height:28px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; border:none; background:var(--surface2);
+    color:var(--text2); font-size:13px; transition: all .15s;
+  }
+  .icon-btn:hover { background:var(--border); color:var(--text); }
+  .icon-btn.del:hover { background:rgba(248,113,113,.15); color:var(--red); }
+
+  /* ── 모달 ── */
+  .modal-bg {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.6); z-index:200;
+    align-items:center; justify-content:center;
+    backdrop-filter:blur(4px);
+  }
+  .modal-bg.open { display:flex; }
+  .modal {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius); width:90%; max-width:560px;
+    max-height:90vh; overflow-y:auto;
+    padding:28px; position:relative;
+  }
+  .modal-title { font-size:16px; font-weight:600; margin-bottom:20px; }
+  .modal-close {
+    position:absolute; top:16px; right:16px;
+    background:none; border:none; color:var(--text2);
+    font-size:18px; cursor:pointer;
+  }
+
+  /* ── 폼 ── */
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .form-group.full { grid-column:1/-1; }
+  label { font-size:12px; color:var(--text2); font-weight:500; }
+  input, select, textarea {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:var(--radius-sm); padding:9px 12px;
+    color:var(--text); font-size:13.5px; font-family:inherit;
+    outline:none; transition: border-color .15s;
+    width:100%;
+  }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent); }
+  textarea { resize:vertical; min-height:80px; }
+  select option { background:var(--surface2); }
+  .form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+
+  /* ── 검색/필터 ── */
+  .toolbar { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+  .search-input {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:var(--radius-sm); padding:8px 14px;
+    color:var(--text); font-size:13px; font-family:inherit;
+    outline:none; min-width:200px;
+  }
+  .search-input:focus { border-color:var(--accent); }
+  .filter-select {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:var(--radius-sm); padding:8px 12px;
+    color:var(--text); font-size:13px; font-family:inherit;
+    outline:none; cursor:pointer;
+  }
+
+  /* ── 업무 체크리스트 ── */
+  .todo-item {
+    display:flex; align-items:flex-start; gap:12px;
+    padding:12px 0; border-bottom:1px solid var(--border);
+  }
+  .todo-item:last-child { border-bottom:none; }
+  .todo-check {
+    width:18px; height:18px; border-radius:5px;
+    border:2px solid var(--border); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; margin-top:2px; transition: all .15s;
+    background:transparent; font-size:11px;
+  }
+  .todo-check.done { background:var(--green); border-color:var(--green); color:#000; }
+  .todo-text { flex:1; }
+  .todo-title { font-size:13.5px; }
+  .todo-title.done { text-decoration:line-through; color:var(--text3); }
+  .todo-meta { font-size:11px; color:var(--text3); margin-top:3px; }
+  .todo-due { font-size:11px; }
+  .due-near { color:var(--yellow); }
+  .due-over { color:var(--red); }
+
+  /* ── 스코어 ── */
+  .score-bar { height:6px; border-radius:3px; background:var(--surface2); overflow:hidden; margin-top:4px; }
+  .score-fill { height:100%; border-radius:3px; background:var(--accent); transition:width .4s; }
+
+  /* ── 빈 상태 ── */
+  .empty { text-align:center; padding:48px 20px; color:var(--text3); }
+  .empty-icon { font-size:36px; margin-bottom:12px; }
+  .empty p { font-size:13.5px; }
+
+  /* ── 설정 패널 ── */
+  .settings-section { margin-bottom:24px; }
+  .settings-label { font-size:12px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
+  .settings-input-row { display:flex; gap:10px; align-items:center; }
+  .settings-input-row input { flex:1; }
+
+  /* ── 모바일 ── */
+  #menu-toggle { display:none; background:none; border:none; color:var(--text); font-size:20px; cursor:pointer; }
+  @media(max-width:768px) {
+    #sidebar { transform:translateX(-100%); }
+    #sidebar.open { transform:translateX(0); }
+    #main { margin-left:0; }
+    #menu-toggle { display:block; }
+    .dashboard-grid { grid-template-columns:1fr; }
+    .form-grid { grid-template-columns:1fr; }
+    .stats-grid { grid-template-columns:1fr 1fr; }
+    .content { padding:16px; }
+    .topbar { padding:12px 16px; }
+    .modal { padding:20px; }
+  }
+  #sidebar-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.5); z-index:99;
+  }
+  #sidebar-overlay.open { display:block; }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 사이드바 -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <h1>📐 범어수학</h1>
+    <p>학원 관리 시스템</p>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-item active" onclick="navigate('dashboard')">
+      <span class="nav-icon">🏠</span> 대시보드
+    </div>
+    <div class="nav-item" onclick="navigate('students')">
+      <span class="nav-icon">👤</span> 학생 관리
+    </div>
+    <div class="nav-item" onclick="navigate('lessons')">
+      <span class="nav-icon">📚</span> 수업 기록
+    </div>
+    <div class="nav-item" onclick="navigate('curriculum')">
+      <span class="nav-icon">📅</span> 커리큘럼
+    </div>
+    <div class="nav-item" onclick="navigate('textbooks')">
+      <span class="nav-icon">📖</span> 교재 기록
+    </div>
+    <div class="nav-item" onclick="navigate('tests')">
+      <span class="nav-icon">📝</span> 테스트
+    </div>
+    <div class="nav-item" onclick="navigate('consults')">
+      <span class="nav-icon">💬</span> 상담
+    </div>
+    <div class="nav-item" onclick="navigate('notes')">
+      <span class="nav-icon">⚠️</span> 특이사항
+    </div>
+    <div class="nav-item" onclick="navigate('todos')">
+      <span class="nav-icon">✅</span> 업무 메모
+    </div>
+    <div class="nav-item" onclick="navigate('settings')">
+      <span class="nav-icon">⚙️</span> 설정
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="sync-btn" onclick="syncData()">☁️ Google 시트 동기화</button>
+    <div class="sync-status" id="sync-status">마지막 동기화: -</div>
+  </div>
+</nav>
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- 메인 -->
+<div id="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <h2 id="page-title">대시보드</h2>
+    </div>
+    <div class="topbar-actions" id="topbar-actions"></div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+</div>
+
+<!-- 모달 -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+const SCRIPT_URL_KEY = 'beomeo_script_url';
+let GAS_URL = localStorage.getItem(SCRIPT_URL_KEY) || '';
+
+let DB = {
+  students: [],
+  lessons: [],
+  curriculum: [],
+  textbooks: [],
+  tests: [],
+  consults: [],
+  notes: [],
+  todos: []
+};
+
+function loadDB() {
+  const saved = localStorage.getItem('beomeo_db');
+  if (saved) DB = JSON.parse(saved);
+}
+function saveDB() {
+  localStorage.setItem('beomeo_db', JSON.stringify(DB));
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function today() { return new Date().toISOString().slice(0,10); }
+function fmt(d) { return d ? d.replace(/-/g,'.') : '-'; }
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+const PAGES = {
+  dashboard: { title:'대시보드', fn: renderDashboard },
+  students:  { title:'학생 관리', fn: renderStudents },
+  lessons:   { title:'수업 기록', fn: renderLessons },
+  curriculum:{ title:'커리큘럼', fn: renderCurriculum },
+  textbooks: { title:'교재 기록', fn: renderTextbooks },
+  tests:     { title:'테스트', fn: renderTests },
+  consults:  { title:'상담', fn: renderConsults },
+  notes:     { title:'특이사항', fn: renderNotes },
+  todos:     { title:'업무 메모', fn: renderTodos },
+  settings:  { title:'설정', fn: renderSettings },
+};
+let currentPage = 'dashboard';
+
+function navigate(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach((el,i) => {
+    el.classList.toggle('active', Object.keys(PAGES)[i] === page);
+  });
+  document.getElementById('page-title').textContent = PAGES[page].title;
+  document.getElementById('topbar-actions').innerHTML = '';
+  document.getElementById('content').innerHTML = '';
+  PAGES[page].fn();
+  closeSidebar();
+}
+
+// ══════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════
+function openModal(html) {
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+}
+
+// ══════════════════════════════════════════
+//  SIDEBAR MOBILE
+// ══════════════════════════════════════════
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ══════════════════════════════════════════
+//  GOOGLE SHEETS SYNC
+// ══════════════════════════════════════════
+async function syncData() {
+  if (!GAS_URL) {
+    navigate('settings');
+    alert('먼저 설정에서 Apps Script URL을 입력해주세요.');
+    return;
+  }
+  document.getElementById('sync-status').textContent = '동기화 중...';
+  try {
+    // 전송
+    await fetch(GAS_URL, {
+      method:'POST',
+      body: JSON.stringify({ action:'save', data: DB }),
+    });
+    // 수신
+    const res = await fetch(GAS_URL + '?action=load');
+    const json = await res.json();
+    if (json.data) { DB = json.data; saveDB(); }
+    const now = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('sync-status').textContent = `마지막: ${now}`;
+    navigate(currentPage);
+  } catch(e) {
+    document.getElementById('sync-status').textContent = '동기화 실패';
+    alert('동기화 실패. URL을 확인해주세요.\n' + e.message);
+  }
+}
+
+// ══════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  const activeStudents = DB.students.filter(s => s.status === '재원').length;
+  const todayLessons = DB.lessons.filter(l => l.date === today()).length;
+  const pendingTodos = DB.todos.filter(t => !t.done).length;
+  const recentTests = [...DB.tests].sort((a,b)=>b.date?.localeCompare(a.date)).slice(0,5);
+  const recentLessons = [...DB.lessons].sort((a,b)=>b.date?.localeCompare(a.date)).slice(0,5);
+
+  document.getElementById('content').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val stat-accent">${DB.students.length}</div><div class="stat-label">전체 학생</div></div>
+      <div class="stat-card"><div class="stat-val stat-green">${activeStudents}</div><div class="stat-label">재원 학생</div></div>
+      <div class="stat-card"><div class="stat-val stat-yellow">${todayLessons}</div><div class="stat-label">오늘 수업</div></div>
+      <div class="stat-card"><div class="stat-val">${pendingTodos}</div><div class="stat-label">미완료 업무</div></div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-title">최근 수업</div>
+        ${recentLessons.length ? `<ul class="recent-list">${recentLessons.map(l=>`
+          <li class="recent-item">
+            <span class="recent-badge">${l.student||'-'}</span>
+            <div class="recent-text">
+              <div>${l.content||'내용 없음'}</div>
+              <div class="recent-sub">${fmt(l.date)} · ${l.teacher||'-'}</div>
+            </div>
+          </li>`).join('')}</ul>`
+        : '<div class="empty"><div class="empty-icon">📚</div><p>수업 기록이 없어요</p></div>'}
+      </div>
+      <div class="card">
+        <div class="card-title">최근 테스트</div>
+        ${recentTests.length ? `<ul class="recent-list">${recentTests.map(t=>`
+          <li class="recent-item">
+            <span class="recent-badge">${t.student||'-'}</span>
+            <div class="recent-text">
+              <div>${t.name||'-'} <strong>${t.score||'-'}점</strong></div>
+              <div class="recent-sub">${fmt(t.date)}</div>
+            </div>
+          </li>`).join('')}</ul>`
+        : '<div class="empty"><div class="empty-icon">📝</div><p>테스트 기록이 없어요</p></div>'}
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+//  STUDENTS
+// ══════════════════════════════════════════
+function renderStudents() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openStudentModal()">+ 학생 추가</button>`;
+
+  const q = document.getElementById('student-search')?.value || '';
+  const filtered = DB.students.filter(s =>
+    !q || s.name?.includes(q) || s.school?.includes(q)
+  );
+
+  document.getElementById('content').innerHTML = `
+    <div class="toolbar">
+      <input class="search-input" id="student-search" placeholder="이름, 학교 검색..." value="${q}" oninput="renderStudents()">
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>이름</th><th>학교/학년</th><th>담당</th><th>과목</th>
+            <th>등록일</th><th>상태</th><th></th>
+          </tr></thead>
+          <tbody>
+            ${filtered.length ? filtered.map(s => `
+              <tr>
+                <td><strong>${s.name||'-'}</strong></td>
+                <td>${s.school||'-'} ${s.grade||''}</td>
+                <td>${s.teacher||'-'}</td>
+                <td>${s.subject||'-'}</td>
+                <td>${fmt(s.regDate)}</td>
+                <td><span class="tag ${s.status==='재원'?'tag-green':s.status==='휴원'?'tag-yellow':'tag-gray'}">${s.status||'재원'}</span></td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openStudentModal('${s.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('students','${s.id}')">🗑️</button>
+                </div></td>
+              </tr>`).join('')
+            : `<tr><td colspan="7"><div class="empty"><p>학생이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openStudentModal(id) {
+  const s = id ? DB.students.find(x=>x.id===id) : {};
+  openModal(`
+    <div class="modal-title">${id ? '학생 수정' : '학생 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>이름 *</label><input id="f-name" value="${s.name||''}" placeholder="홍길동"></div>
+      <div class="form-group"><label>학교</label><input id="f-school" value="${s.school||''}" placeholder="대구중학교"></div>
+      <div class="form-group"><label>학년</label><input id="f-grade" value="${s.grade||''}" placeholder="고2"></div>
+      <div class="form-group"><label>담당강사</label>
+        <select id="f-teacher">
+          <option value="">선택</option>
+          <option ${s.teacher==='원경T'?'selected':''}>원경T</option>
+          <option ${s.teacher==='원영T'?'selected':''}>원영T</option>
+        </select>
+      </div>
+      <div class="form-group"><label>과목</label><input id="f-subject" value="${s.subject||''}" placeholder="수학I, 수학II"></div>
+      <div class="form-group"><label>수업 시간</label><input id="f-schedule" value="${s.schedule||''}" placeholder="월수금 7-9시"></div>
+      <div class="form-group"><label>수업료</label><input id="f-tuition" value="${s.tuition||''}" placeholder="350,000"></div>
+      <div class="form-group"><label>등록일</label><input id="f-regDate" type="date" value="${s.regDate||today()}"></div>
+      <div class="form-group"><label>상태</label>
+        <select id="f-status">
+          <option ${(s.status||'재원')==='재원'?'selected':''}>재원</option>
+          <option ${s.status==='휴원'?'selected':''}>휴원</option>
+          <option ${s.status==='퇴원'?'selected':''}>퇴원</option>
+        </select>
+      </div>
+      <div class="form-group"><label>연락처</label><input id="f-phone" value="${s.phone||''}" placeholder="010-0000-0000"></div>
+      <div class="form-group full"><label>메모</label><textarea id="f-memo">${s.memo||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveStudent('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveStudent(id) {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('이름을 입력해주세요.'); return; }
+  const data = {
+    id: id || uid(), name,
+    school: document.getElementById('f-school').value,
+    grade: document.getElementById('f-grade').value,
+    teacher: document.getElementById('f-teacher').value,
+    subject: document.getElementById('f-subject').value,
+    schedule: document.getElementById('f-schedule').value,
+    tuition: document.getElementById('f-tuition').value,
+    regDate: document.getElementById('f-regDate').value,
+    status: document.getElementById('f-status').value,
+    phone: document.getElementById('f-phone').value,
+    memo: document.getElementById('f-memo').value,
+  };
+  if (id) { const i = DB.students.findIndex(x=>x.id===id); DB.students[i] = data; }
+  else DB.students.push(data);
+  saveDB(); closeModal(); renderStudents();
+}
+
+// ══════════════════════════════════════════
+//  LESSONS
+// ══════════════════════════════════════════
+function renderLessons() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openLessonModal()">+ 수업 추가</button>`;
+
+  const sorted = [...DB.lessons].sort((a,b)=>b.date?.localeCompare(a.date));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>학생</th><th>강사</th><th>수업 내용</th><th>과제</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(l=>`
+              <tr>
+                <td>${fmt(l.date)}</td>
+                <td><span class="tag tag-blue">${l.student||'-'}</span></td>
+                <td>${l.teacher||'-'}</td>
+                <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.content||'-'}</td>
+                <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.homework||'-'}</td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openLessonModal('${l.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('lessons','${l.id}')">🗑️</button>
+                </div></td>
+              </tr>`).join('')
+            : `<tr><td colspan="6"><div class="empty"><p>수업 기록이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openLessonModal(id) {
+  const l = id ? DB.lessons.find(x=>x.id===id) : {};
+  const studentOptions = DB.students.map(s=>
+    `<option ${l.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id ? '수업 수정' : '수업 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>날짜 *</label><input id="f-date" type="date" value="${l.date||today()}"></div>
+      <div class="form-group"><label>학생 *</label>
+        <select id="f-student"><option value="">선택</option>${studentOptions}</select>
+      </div>
+      <div class="form-group"><label>강사</label>
+        <select id="f-teacher">
+          <option value="">선택</option>
+          <option ${l.teacher==='원경T'?'selected':''}>원경T</option>
+          <option ${l.teacher==='원영T'?'selected':''}>원영T</option>
+        </select>
+      </div>
+      <div class="form-group"><label>과목</label><input id="f-subject" value="${l.subject||''}" placeholder="수학I"></div>
+      <div class="form-group full"><label>수업 내용</label><textarea id="f-content">${l.content||''}</textarea></div>
+      <div class="form-group full"><label>과제</label><textarea id="f-homework">${l.homework||''}</textarea></div>
+      <div class="form-group full"><label>특이사항</label><textarea id="f-special">${l.special||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveLesson('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveLesson(id) {
+  const data = {
+    id: id||uid(),
+    date: document.getElementById('f-date').value,
+    student: document.getElementById('f-student').value,
+    teacher: document.getElementById('f-teacher').value,
+    subject: document.getElementById('f-subject').value,
+    content: document.getElementById('f-content').value,
+    homework: document.getElementById('f-homework').value,
+    special: document.getElementById('f-special').value,
+  };
+  if (!data.student) { alert('학생을 선택해주세요.'); return; }
+  if (id) { const i = DB.lessons.findIndex(x=>x.id===id); DB.lessons[i]=data; }
+  else DB.lessons.push(data);
+  saveDB(); closeModal(); renderLessons();
+}
+
+// ══════════════════════════════════════════
+//  CURRICULUM
+// ══════════════════════════════════════════
+function renderCurriculum() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openCurriculumModal()">+ 커리큘럼 추가</button>`;
+
+  const sorted = [...DB.curriculum].sort((a,b)=>b.startDate?.localeCompare(a.startDate));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>학생</th><th>과목/교재</th><th>시작일</th><th>종료일</th><th>진행상태</th><th>진도</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(c=>{
+              const total = c.totalDays||1;
+              const elapsed = Math.max(0, Math.min(total,
+                Math.round((new Date()-new Date(c.startDate))/(1000*60*60*24))));
+              const pct = Math.round(elapsed/total*100);
+              return `<tr>
+                <td><span class="tag tag-blue">${c.student||'-'}</span></td>
+                <td>${c.subject||'-'} · ${c.textbook||'-'}</td>
+                <td>${fmt(c.startDate)}</td>
+                <td>${fmt(c.endDate)}</td>
+                <td><span class="tag ${c.status==='진행중'?'tag-green':c.status==='완료'?'tag-gray':'tag-yellow'}">${c.status||'진행중'}</span></td>
+                <td style="min-width:100px">
+                  <div style="font-size:11px;color:var(--text2)">${pct}%</div>
+                  <div class="score-bar"><div class="score-fill" style="width:${pct}%"></div></div>
+                </td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openCurriculumModal('${c.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('curriculum','${c.id}')">🗑️</button>
+                </div></td>
+              </tr>`;}).join('')
+            : `<tr><td colspan="7"><div class="empty"><p>커리큘럼이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openCurriculumModal(id) {
+  const c = id ? DB.curriculum.find(x=>x.id===id) : {};
+  const studentOptions = DB.students.map(s=>
+    `<option ${c.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id?'커리큘럼 수정':'커리큘럼 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>학생 *</label>
+        <select id="f-student"><option value="">선택</option>${studentOptions}</select>
+      </div>
+      <div class="form-group"><label>과목</label><input id="f-subject" value="${c.subject||''}" placeholder="수학I"></div>
+      <div class="form-group full"><label>교재</label><input id="f-textbook" value="${c.textbook||''}" placeholder="수학의 정석 개념편"></div>
+      <div class="form-group"><label>시작일</label><input id="f-startDate" type="date" value="${c.startDate||today()}"></div>
+      <div class="form-group"><label>종료 목표일</label><input id="f-endDate" type="date" value="${c.endDate||''}"></div>
+      <div class="form-group"><label>총 수업일수</label><input id="f-totalDays" type="number" value="${c.totalDays||''}" placeholder="30"></div>
+      <div class="form-group"><label>상태</label>
+        <select id="f-status">
+          <option ${(c.status||'진행중')==='진행중'?'selected':''}>진행중</option>
+          <option ${c.status==='완료'?'selected':''}>완료</option>
+          <option ${c.status==='중단'?'selected':''}>중단</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>메모</label><textarea id="f-memo">${c.memo||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveCurriculum('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveCurriculum(id) {
+  const data = {
+    id:id||uid(),
+    student: document.getElementById('f-student').value,
+    subject: document.getElementById('f-subject').value,
+    textbook: document.getElementById('f-textbook').value,
+    startDate: document.getElementById('f-startDate').value,
+    endDate: document.getElementById('f-endDate').value,
+    totalDays: +document.getElementById('f-totalDays').value||0,
+    status: document.getElementById('f-status').value,
+    memo: document.getElementById('f-memo').value,
+  };
+  if (!data.student) { alert('학생을 선택해주세요.'); return; }
+  if (id) { const i = DB.curriculum.findIndex(x=>x.id===id); DB.curriculum[i]=data; }
+  else DB.curriculum.push(data);
+  saveDB(); closeModal(); renderCurriculum();
+}
+
+// ══════════════════════════════════════════
+//  TEXTBOOKS
+// ══════════════════════════════════════════
+function renderTextbooks() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openTextbookModal()">+ 교재 기록 추가</button>`;
+  const sorted = [...DB.textbooks].sort((a,b)=>b.date?.localeCompare(a.date));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>학생</th><th>교재</th><th>범위</th><th>메모</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(t=>`
+              <tr>
+                <td>${fmt(t.date)}</td>
+                <td><span class="tag tag-blue">${t.student||'-'}</span></td>
+                <td>${t.book||'-'}</td>
+                <td>${t.range||'-'}</td>
+                <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.memo||'-'}</td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openTextbookModal('${t.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('textbooks','${t.id}')">🗑️</button>
+                </div></td>
+              </tr>`).join('')
+            : `<tr><td colspan="6"><div class="empty"><p>교재 기록이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openTextbookModal(id) {
+  const t = id ? DB.textbooks.find(x=>x.id===id) : {};
+  const studentOptions = DB.students.map(s=>
+    `<option ${t.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id?'교재 기록 수정':'교재 기록 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>날짜</label><input id="f-date" type="date" value="${t.date||today()}"></div>
+      <div class="form-group"><label>학생</label>
+        <select id="f-student"><option value="">선택</option>${studentOptions}</select>
+      </div>
+      <div class="form-group"><label>교재명</label><input id="f-book" value="${t.book||''}" placeholder="수학의 정석 개념편"></div>
+      <div class="form-group"><label>범위</label><input id="f-range" value="${t.range||''}" placeholder="p.120-145, 3단원"></div>
+      <div class="form-group full"><label>메모</label><textarea id="f-memo">${t.memo||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveTextbook('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveTextbook(id) {
+  const data = {
+    id:id||uid(),
+    date: document.getElementById('f-date').value,
+    student: document.getElementById('f-student').value,
+    book: document.getElementById('f-book').value,
+    range: document.getElementById('f-range').value,
+    memo: document.getElementById('f-memo').value,
+  };
+  if (id) { const i = DB.textbooks.findIndex(x=>x.id===id); DB.textbooks[i]=data; }
+  else DB.textbooks.push(data);
+  saveDB(); closeModal(); renderTextbooks();
+}
+
+// ══════════════════════════════════════════
+//  TESTS
+// ══════════════════════════════════════════
+function renderTests() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openTestModal()">+ 테스트 추가</button>`;
+  const sorted = [...DB.tests].sort((a,b)=>b.date?.localeCompare(a.date));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>학생</th><th>시험명</th><th>점수</th><th>만점</th><th>등급</th><th>메모</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(t=>{
+              const pct = t.maxScore ? Math.round(t.score/t.maxScore*100) : null;
+              const scoreColor = pct>=90?'tag-green':pct>=70?'tag-blue':pct>=50?'tag-yellow':'tag-red';
+              return `<tr>
+                <td>${fmt(t.date)}</td>
+                <td><span class="tag tag-blue">${t.student||'-'}</span></td>
+                <td>${t.name||'-'}</td>
+                <td><span class="tag ${scoreColor}">${t.score??'-'}점</span></td>
+                <td>${t.maxScore||'-'}점</td>
+                <td>${t.grade||'-'}</td>
+                <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.memo||'-'}</td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openTestModal('${t.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('tests','${t.id}')">🗑️</button>
+                </div></td>
+              </tr>`;}).join('')
+            : `<tr><td colspan="8"><div class="empty"><p>테스트 기록이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openTestModal(id) {
+  const t = id ? DB.tests.find(x=>x.id===id) : {};
+  const studentOptions = DB.students.map(s=>
+    `<option ${t.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id?'테스트 수정':'테스트 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>날짜</label><input id="f-date" type="date" value="${t.date||today()}"></div>
+      <div class="form-group"><label>학생</label>
+        <select id="f-student"><option value="">선택</option>${studentOptions}</select>
+      </div>
+      <div class="form-group full"><label>시험명</label><input id="f-name" value="${t.name||''}" placeholder="수학I 단원평가 1회"></div>
+      <div class="form-group"><label>점수</label><input id="f-score" type="number" value="${t.score??''}" placeholder="85"></div>
+      <div class="form-group"><label>만점</label><input id="f-maxScore" type="number" value="${t.maxScore||100}" placeholder="100"></div>
+      <div class="form-group"><label>등급</label><input id="f-grade" value="${t.grade||''}" placeholder="2등급"></div>
+      <div class="form-group full"><label>메모</label><textarea id="f-memo">${t.memo||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveTest('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveTest(id) {
+  const data = {
+    id:id||uid(),
+    date: document.getElementById('f-date').value,
+    student: document.getElementById('f-student').value,
+    name: document.getElementById('f-name').value,
+    score: +document.getElementById('f-score').value||0,
+    maxScore: +document.getElementById('f-maxScore').value||100,
+    grade: document.getElementById('f-grade').value,
+    memo: document.getElementById('f-memo').value,
+  };
+  if (id) { const i = DB.tests.findIndex(x=>x.id===id); DB.tests[i]=data; }
+  else DB.tests.push(data);
+  saveDB(); closeModal(); renderTests();
+}
+
+// ══════════════════════════════════════════
+//  CONSULTS
+// ══════════════════════════════════════════
+function renderConsults() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openConsultModal()">+ 상담 추가</button>`;
+  const sorted = [...DB.consults].sort((a,b)=>b.date?.localeCompare(a.date));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>학생</th><th>상담 대상</th><th>내용</th><th>작성자</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(c=>`
+              <tr>
+                <td>${fmt(c.date)}</td>
+                <td><span class="tag tag-blue">${c.student||'-'}</span></td>
+                <td>${c.target||'-'}</td>
+                <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.content||'-'}</td>
+                <td>${c.writer||'-'}</td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openConsultModal('${c.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('consults','${c.id}')">🗑️</button>
+                </div></td>
+              </tr>`).join('')
+            : `<tr><td colspan="6"><div class="empty"><p>상담 기록이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openConsultModal(id) {
+  const c = id ? DB.consults.find(x=>x.id===id) : {};
+  const studentOptions = DB.students.map(s=>
+    `<option ${c.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id?'상담 수정':'상담 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>날짜</label><input id="f-date" type="date" value="${c.date||today()}"></div>
+      <div class="form-group"><label>학생</label>
+        <select id="f-student"><option value="">선택</option>${studentOptions}</select>
+      </div>
+      <div class="form-group"><label>상담 대상</label>
+        <select id="f-target">
+          <option ${(c.target||'학부모')==='학부모'?'selected':''}>학부모</option>
+          <option ${c.target==='학생'?'selected':''}>학생</option>
+          <option ${c.target==='학부모+학생'?'selected':''}>학부모+학생</option>
+        </select>
+      </div>
+      <div class="form-group"><label>작성자</label>
+        <select id="f-writer">
+          <option ${(c.writer||'원경T')==='원경T'?'selected':''}>원경T</option>
+          <option ${c.writer==='원영T'?'selected':''}>원영T</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>상담 내용</label><textarea id="f-content" style="min-height:120px">${c.content||''}</textarea></div>
+      <div class="form-group full"><label>결과/후속조치</label><textarea id="f-result">${c.result||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveConsult('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveConsult(id) {
+  const data = {
+    id:id||uid(),
+    date: document.getElementById('f-date').value,
+    student: document.getElementById('f-student').value,
+    target: document.getElementById('f-target').value,
+    writer: document.getElementById('f-writer').value,
+    content: document.getElementById('f-content').value,
+    result: document.getElementById('f-result').value,
+  };
+  if (id) { const i = DB.consults.findIndex(x=>x.id===id); DB.consults[i]=data; }
+  else DB.consults.push(data);
+  saveDB(); closeModal(); renderConsults();
+}
+
+// ══════════════════════════════════════════
+//  NOTES (특이사항)
+// ══════════════════════════════════════════
+function renderNotes() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openNoteModal()">+ 특이사항 추가</button>`;
+  const sorted = [...DB.notes].sort((a,b)=>b.date?.localeCompare(a.date));
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>학생</th><th>내용</th><th>작성자</th><th></th></tr></thead>
+          <tbody>
+            ${sorted.length ? sorted.map(n=>`
+              <tr>
+                <td>${fmt(n.date)}</td>
+                <td><span class="tag tag-yellow">${n.student||'전체'}</span></td>
+                <td style="max-width:320px">${n.content||'-'}</td>
+                <td>${n.writer||'-'}</td>
+                <td><div class="row-actions">
+                  <button class="icon-btn" onclick="openNoteModal('${n.id}')">✏️</button>
+                  <button class="icon-btn del" onclick="deleteItem('notes','${n.id}')">🗑️</button>
+                </div></td>
+              </tr>`).join('')
+            : `<tr><td colspan="5"><div class="empty"><p>특이사항이 없어요</p></div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function openNoteModal(id) {
+  const n = id ? DB.notes.find(x=>x.id===id) : {};
+  const studentOptions = `<option value="">전체/공통</option>` +
+    DB.students.map(s=>`<option ${n.student===s.name?'selected':''}>${s.name}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${id?'특이사항 수정':'특이사항 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group"><label>날짜</label><input id="f-date" type="date" value="${n.date||today()}"></div>
+      <div class="form-group"><label>학생 (선택)</label>
+        <select id="f-student">${studentOptions}</select>
+      </div>
+      <div class="form-group"><label>작성자</label>
+        <select id="f-writer">
+          <option ${(n.writer||'원경T')==='원경T'?'selected':''}>원경T</option>
+          <option ${n.writer==='원영T'?'selected':''}>원영T</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>내용</label><textarea id="f-content" style="min-height:120px">${n.content||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveNote('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveNote(id) {
+  const data = {
+    id:id||uid(),
+    date: document.getElementById('f-date').value,
+    student: document.getElementById('f-student').value,
+    writer: document.getElementById('f-writer').value,
+    content: document.getElementById('f-content').value,
+  };
+  if (id) { const i = DB.notes.findIndex(x=>x.id===id); DB.notes[i]=data; }
+  else DB.notes.push(data);
+  saveDB(); closeModal(); renderNotes();
+}
+
+// ══════════════════════════════════════════
+//  TODOS
+// ══════════════════════════════════════════
+function renderTodos() {
+  document.getElementById('topbar-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="openTodoModal()">+ 업무 추가</button>`;
+  const todos = [...DB.todos].sort((a,b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    return (a.due||'').localeCompare(b.due||'');
+  });
+  const todayStr = today();
+
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      ${todos.length ? `<div>${todos.map(t => {
+        const dueClass = !t.done && t.due
+          ? (t.due < todayStr ? 'due-over' : t.due === todayStr ? 'due-near' : '')
+          : '';
+        return `<div class="todo-item">
+          <div class="todo-check ${t.done?'done':''}" onclick="toggleTodo('${t.id}')">${t.done?'✓':''}</div>
+          <div class="todo-text">
+            <div class="todo-title ${t.done?'done':''}">${t.title||'-'}</div>
+            <div class="todo-meta">
+              ${t.category?`<span class="tag tag-gray" style="margin-right:4px">${t.category}</span>`:''}
+              ${t.due?`<span class="todo-due ${dueClass}">📅 ${fmt(t.due)}</span>`:''}
+              ${t.writer?`<span style="margin-left:6px;color:var(--text3)">${t.writer}</span>`:''}
+            </div>
+            ${t.memo?`<div style="font-size:12px;color:var(--text3);margin-top:4px">${t.memo}</div>`:''}
+          </div>
+          <div class="row-actions">
+            <button class="icon-btn" onclick="openTodoModal('${t.id}')">✏️</button>
+            <button class="icon-btn del" onclick="deleteItem('todos','${t.id}')">🗑️</button>
+          </div>
+        </div>`;}).join('')}</div>`
+      : '<div class="empty"><div class="empty-icon">✅</div><p>업무가 없어요</p></div>'}
+    </div>`;
+}
+
+function toggleTodo(id) {
+  const t = DB.todos.find(x=>x.id===id);
+  if (t) { t.done = !t.done; saveDB(); renderTodos(); }
+}
+
+function openTodoModal(id) {
+  const t = id ? DB.todos.find(x=>x.id===id) : {};
+  openModal(`
+    <div class="modal-title">${id?'업무 수정':'업무 추가'}</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>업무 내용 *</label><input id="f-title" value="${t.title||''}" placeholder="학부모 연락 등 업무 내용"></div>
+      <div class="form-group"><label>카테고리</label>
+        <select id="f-category">
+          <option value="">선택</option>
+          <option ${t.category==='행정'?'selected':''}>행정</option>
+          <option ${t.category==='학생관리'?'selected':''}>학생관리</option>
+          <option ${t.category==='학부모소통'?'selected':''}>학부모소통</option>
+          <option ${t.category==='수업준비'?'selected':''}>수업준비</option>
+          <option ${t.category==='기타'?'selected':''}>기타</option>
+        </select>
+      </div>
+      <div class="form-group"><label>마감일</label><input id="f-due" type="date" value="${t.due||''}"></div>
+      <div class="form-group"><label>작성자</label>
+        <select id="f-writer">
+          <option ${(t.writer||'원경T')==='원경T'?'selected':''}>원경T</option>
+          <option ${t.writer==='원영T'?'selected':''}>원영T</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>메모</label><textarea id="f-memo">${t.memo||''}</textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveTodo('${id||''}')">저장</button>
+    </div>`);
+}
+
+function saveTodo(id) {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('업무 내용을 입력해주세요.'); return; }
+  const exist = id ? DB.todos.find(x=>x.id===id) : null;
+  const data = {
+    id:id||uid(),
+    title,
+    category: document.getElementById('f-category').value,
+    due: document.getElementById('f-due').value,
+    writer: document.getElementById('f-writer').value,
+    memo: document.getElementById('f-memo').value,
+    done: exist?.done || false,
+  };
+  if (id) { const i = DB.todos.findIndex(x=>x.id===id); DB.todos[i]=data; }
+  else DB.todos.push(data);
+  saveDB(); closeModal(); renderTodos();
+}
+
+// ══════════════════════════════════════════
+//  SETTINGS
+// ══════════════════════════════════════════
+function renderSettings() {
+  document.getElementById('content').innerHTML = `
+    <div class="card" style="max-width:600px">
+      <div class="settings-section">
+        <div class="settings-label">☁️ Google Sheets 연동</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.6">
+          구글 Apps Script 배포 URL을 입력하면 원영쌤과 실시간 데이터를 공유할 수 있어요.
+        </p>
+        <div class="settings-input-row">
+          <input id="gas-url" placeholder="https://script.google.com/macros/s/..." value="${GAS_URL}">
+          <button class="btn btn-primary" onclick="saveGasUrl()">저장</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-label">💾 데이터 관리</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-ghost" onclick="exportData()">📤 JSON 내보내기</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">📥 JSON 가져오기</button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-label">📋 Apps Script 코드</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.6">
+          구글 시트에서 확장 프로그램 → Apps Script를 열고 아래 코드를 붙여넣은 후 배포하세요.
+        </p>
+        <textarea readonly style="min-height:200px;font-family:'DM Mono',monospace;font-size:11px;background:var(--surface2)">${getAppsScriptCode()}</textarea>
+        <button class="btn btn-ghost" style="margin-top:8px" onclick="copyScript()">📋 코드 복사</button>
+      </div>
+    </div>`;
+}
+
+function saveGasUrl() {
+  GAS_URL = document.getElementById('gas-url').value.trim();
+  localStorage.setItem(SCRIPT_URL_KEY, GAS_URL);
+  alert('저장됐어요! 이제 동기화 버튼을 눌러보세요.');
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `beomeo_backup_${today()}.json`;
+  a.click();
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      DB = JSON.parse(ev.target.result);
+      saveDB();
+      navigate(currentPage);
+      alert('가져오기 완료!');
+    } catch { alert('파일 형식이 올바르지 않아요.'); }
+  };
+  reader.readAsText(file);
+}
+
+function copyScript() {
+  navigator.clipboard.writeText(getAppsScriptCode())
+    .then(() => alert('복사됐어요!'));
+}
+
+function getAppsScriptCode() {
+  return `function doGet(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet()
+    .getSheetByName('beomeo_data') || 
+    SpreadsheetApp.getActiveSpreadsheet().insertSheet('beomeo_data');
+  const data = sheet.getRange(1,1).getValue();
+  return ContentService
+    .createTextOutput(JSON.stringify({ data: data ? JSON.parse(data) : null }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet()
+    .getSheetByName('beomeo_data') || 
+    SpreadsheetApp.getActiveSpreadsheet().insertSheet('beomeo_data');
+  const payload = JSON.parse(e.postData.contents);
+  if (payload.action === 'save') {
+    sheet.getRange(1,1).setValue(JSON.stringify(payload.data));
+  }
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+}
+
+// ══════════════════════════════════════════
+//  COMMON DELETE
+// ══════════════════════════════════════════
+function deleteItem(collection, id) {
+  if (!confirm('삭제할까요?')) return;
+  DB[collection] = DB[collection].filter(x=>x.id!==id);
+  saveDB();
+  navigate(currentPage);
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+loadDB();
+navigate('dashboard');
+</script>
+</body>
+</html>
