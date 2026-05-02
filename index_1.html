@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>범어수학 관리시스템</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2128;
+  --surface3: #21262d;
+  --border: #30363d;
+  --border2: #3d444d;
+  --accent: #4493f8;
+  --accent2: #388bfd;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+  --orange: #db6d28;
+  --text: #e6edf3;
+  --text2: #848d97;
+  --text3: #484f58;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Noto Sans KR',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* ── 헤더 ── */
+.header {
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.header-logo {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Noto Serif KR',serif;
+  font-weight:600;
+  font-size:16px;
+  color:var(--text);
+}
+.header-logo span {
+  color:var(--accent);
+}
+.header-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.sync-indicator {
+  font-size:11px;
+  color:var(--text3);
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.sync-dot {
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--green);
+}
+.sync-dot.syncing {
+  background:var(--yellow);
+  animation:pulse 1s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── 버튼 공통 ── */
+.btn {
+  padding:7px 14px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border2);
+  background:var(--surface3);
+  color:var(--text);
+  font-size:13px;
+  font-family:inherit;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all .15s;
+  white-space:nowrap;
+}
+.btn:hover { background:var(--border); }
+.btn-primary {
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.btn-primary:hover { background:var(--accent2); border-color:var(--accent2); }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.btn-ghost { background:transparent; border-color:transparent; color:var(--text2); }
+.btn-ghost:hover { background:var(--surface3); color:var(--text); }
+.btn-danger { color:var(--red); border-color:rgba(248,81,73,.3); background:rgba(248,81,73,.08); }
+.btn-danger:hover { background:rgba(248,81,73,.15); }
+
+/* ── 메인 컨테이너 ── */
+.main { padding:24px; max-width:1400px; margin:0 auto; }
+
+/* ── 공지 배너 ── */
+.notice-banner {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:var(--radius);
+  padding:14px 18px;
+  margin-bottom:24px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+.notice-banner-icon { font-size:16px; margin-top:1px; }
+.notice-banner-body { flex:1; }
+.notice-banner-title {
+  font-size:11px;
+  font-weight:600;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  margin-bottom:4px;
+}
+.notice-edit-btn {
+  font-size:11px;
+  color:var(--text3);
+  cursor:pointer;
+  margin-left:8px;
+}
+.notice-edit-btn:hover { color:var(--text2); }
+.notice-content { font-size:13.5px; color:var(--text); }
+.notice-input {
+  width:100%;
+  background:var(--surface2);
+  border:1px solid var(--accent);
+  border-radius:var(--radius-sm);
+  padding:8px 10px;
+  color:var(--text);
+  font-size:13.5px;
+  font-family:inherit;
+  outline:none;
+  margin-top:4px;
+}
+
+/* ── 섹션 헤더 ── */
+.section-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.section-title {
+  font-size:12px;
+  font-weight:600;
+  color:var(--text3);
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.section-badge {
+  background:var(--surface3);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1px 8px;
+  font-size:11px;
+  color:var(--text2);
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+}
+
+/* ── 학생 카드 그리드 ── */
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:14px;
+  margin-bottom:32px;
+}
+
+/* ── 학생 카드 ── */
+.student-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+  overflow:hidden;
+}
+.student-card:hover {
+  border-color:var(--border2);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+.student-card.today {
+  border-color:rgba(68,147,248,.4);
+  background:linear-gradient(135deg, var(--surface) 0%, rgba(68,147,248,.05) 100%);
+}
+.student-card.today::before {
+  content:'오늘 수업';
+  position:absolute;
+  top:10px; right:10px;
+  background:var(--accent);
+  color:#fff;
+  font-size:10px;
+  font-weight:600;
+  padding:2px 8px;
+  border-radius:20px;
+  letter-spacing:.3px;
+}
+.card-header {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.card-name { font-size:16px; font-weight:700; }
+.card-meta {
+  font-size:11.5px;
+  color:var(--text2);
+  margin-top:2px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.card-teacher {
+  background:var(--surface3);
+  border-radius:4px;
+  padding:1px 6px;
+  font-size:10.5px;
+  color:var(--text2);
+  border:1px solid var(--border);
+}
+.card-progress-label {
+  display:flex;
+  justify-content:space-between;
+  font-size:11.5px;
+  color:var(--text2);
+  margin-bottom:5px;
+}
+.progress-bar {
+  height:5px;
+  background:var(--surface3);
+  border-radius:3px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.progress-fill {
+  height:100%;
+  border-radius:3px;
+  background:linear-gradient(90deg, var(--accent), var(--purple));
+  transition:width .6s ease;
+}
+.card-goal {
+  font-size:12px;
+  color:var(--text2);
+  background:var(--surface2);
+  border-radius:var(--radius-sm);
+  padding:6px 10px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid var(--border);
+}
+.card-row {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:var(--text2);
+  margin-top:5px;
+}
+.card-row-label {
+  font-size:10.5px;
+  color:var(--text3);
+  min-width:30px;
+}
+.card-special {
+  color:var(--yellow);
+  font-size:12px;
+  margin-top:5px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+/* ── 빈 카드 (학생 추가) ── */
+.add-card {
+  background:transparent;
+  border:2px dashed var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:var(--text3);
+  font-size:13px;
+  min-height:120px;
+}
+.add-card:hover {
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+/* ── 학생 상세 페이지 ── */
+.student-detail { display:none; }
+.student-detail.active { display:block; }
+.home-view { display:block; }
+.home-view.hidden { display:none; }
+
+.detail-header {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:24px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+.detail-back {
+  width:36px; height:36px;
+  border-radius:var(--radius-sm);
+  background:var(--surface);
+  border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  font-size:16px;
+  transition:all .15s;
+  flex-shrink:0;
+}
+.detail-back:hover { background:var(--surface2); }
+.detail-info { flex:1; }
+.detail-name { font-size:22px; font-weight:700; }
+.detail-sub {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:4px;
+  font-size:13px;
+  color:var(--text2);
+}
+.detail-actions { display:flex; gap:8px; }
+
+/* ── 2열 레이아웃 ── */
+.detail-layout {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.detail-left { display:flex; flex-direction:column; gap:16px; }
+.detail-right { display:flex; flex-direction:column; gap:16px; }
+
+/* ── 섹션 카드 ── */
+.section-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.section-card-header {
+  padding:13px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--surface2);
+}
+.section-card-title {
+  font-size:12px;
+  font-weight:600;
+  color:var(--text2);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.section-card-body { padding:0; }
+
+/* ── 표 스타일 ── */
+.data-table { width:100%; border-collapse:collapse; }
+.data-table th {
+  padding:9px 14px;
+  text-align:left;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text3);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+  background:var(--surface2);
+}
+.data-table td {
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+  vertical-align:top;
+}
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:var(--surface2); }
+.data-table td.date { color:var(--text2); font-size:12px; white-space:nowrap; width:90px; }
+.data-table td input,
+.data-table td textarea,
+.data-table td select {
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  width:100%;
+  resize:none;
+  min-height:20px;
+}
+.data-table td input:focus,
+.data-table td textarea:focus {
+  background:var(--surface3);
+  border-radius:4px;
+  padding:2px 4px;
+  margin:-2px -4px;
+}
+.table-add-row {
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--text3);
+  font-size:12.5px;
+  cursor:pointer;
+  transition:all .15s;
+  border-top:1px dashed var(--border);
+}
+.table-add-row:hover { color:var(--accent); background:rgba(68,147,248,.04); }
+
+/* ── 상태 뱃지 ── */
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:500;
+  white-space:nowrap;
+}
+.badge-blue { background:rgba(68,147,248,.15); color:var(--accent); }
+.badge-green { background:rgba(63,185,80,.12); color:var(--green); }
+.badge-yellow { background:rgba(210,153,34,.12); color:var(--yellow); }
+.badge-red { background:rgba(248,81,73,.12); color:var(--red); }
+.badge-gray { background:var(--surface3); color:var(--text2); }
+
+/* ── 삭제 버튼 ── */
+.del-row {
+  width:22px; height:22px;
+  border-radius:4px;
+  background:transparent;
+  border:none;
+  color:var(--text3);
+  cursor:pointer;
+  font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .15s;
+  flex-shrink:0;
+}
+.del-row:hover { background:rgba(248,81,73,.1); color:var(--red); }
+
+/* ── 모달 ── */
+.modal-bg {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:200;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.modal-bg.open { display:flex; }
+.modal {
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  width:90%; max-width:520px;
+  max-height:85vh;
+  overflow-y:auto;
+  padding:28px;
+  position:relative;
+  box-shadow:var(--shadow);
+}
+.modal-title { font-size:17px; font-weight:700; margin-bottom:20px; }
+.modal-close {
+  position:absolute; top:16px; right:16px;
+  background:none; border:none;
+  color:var(--text2); font-size:18px; cursor:pointer;
+}
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-group label { font-size:12px; color:var(--text2); font-weight:500; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  padding:9px 12px;
+  color:var(--text);
+  font-size:13.5px;
+  font-family:inherit;
+  outline:none;
+  transition:border-color .15s;
+  width:100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color:var(--accent); }
+.form-group textarea { resize:vertical; min-height:80px; }
+.form-group select option { background:var(--surface2); }
+.form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+
+/* ── 진도 입력 ── */
+.progress-input-wrap {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.progress-input-wrap input[type=range] {
+  flex:1;
+  accent-color:var(--accent);
+  height:4px;
+  background:transparent;
+  border:none;
+  padding:0;
+}
+.progress-num { font-size:13px; color:var(--accent); font-weight:600; min-width:35px; }
+
+/* ── 반응형 ── */
+@media(max-width:900px) {
+  .detail-layout { grid-template-columns:1fr; }
+  .detail-right { }
+}
+@media(max-width:600px) {
+  .main { padding:16px; }
+  .cards-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .header { padding:0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="header-logo">
+    <span>📐</span> 범어수학<span>관리시스템</span>
+  </div>
+  <div class="header-actions">
+    <div class="sync-indicator" id="sync-status">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span id="sync-text">동기화 대기</span>
+    </div>
+    <button class="btn btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
+  </div>
+</header>
+
+<!-- 메인 홈 뷰 -->
+<div class="main home-view" id="home-view">
+
+  <!-- 공지 배너 -->
+  <div class="notice-banner" id="notice-banner">
+    <div class="notice-banner-icon">📢</div>
+    <div class="notice-banner-body">
+      <div class="notice-banner-title">
+        전체 공지
+        <span class="notice-edit-btn" onclick="toggleNoticeEdit()">✏️ 수정</span>
+      </div>
+      <div class="notice-content" id="notice-content">공지 내용을 입력하세요.</div>
+      <input class="notice-input" id="notice-input" type="text" placeholder="공지 내용 입력..." style="display:none" onblur="saveNotice()" onkeydown="if(event.key==='Enter')saveNotice()">
+    </div>
+  </div>
+
+  <!-- 오늘 수업 -->
+  <div id="today-section">
+    <div class="section-header">
+      <div class="section-title">
+        🟢 오늘 수업
+        <span class="section-badge" id="today-count">0명</span>
+      </div>
+    </div>
+    <div class="cards-grid" id="today-grid"></div>
+  </div>
+
+  <!-- 전체 학생 -->
+  <div class="section-header">
+    <div class="section-title">
+      👤 전체 학생
+      <span class="section-badge" id="all-count">0명</span>
+    </div>
+    <div style="display:flex;gap:8px">
+      <select class="btn btn-sm" id="filter-teacher" onchange="renderCards()" style="cursor:pointer">
+        <option value="">전체 강사</option>
+        <option value="원경T">원경T</option>
+        <option value="원영T">원영T</option>
+      </select>
+    </div>
+  </div>
+  <div class="cards-grid" id="all-grid">
+    <div class="add-card" onclick="openAddStudent()">
+      <span style="font-size:20px">+</span> 첫 학생 추가하기
+    </div>
+  </div>
+
+</div>
+
+<!-- 학생 상세 뷰 -->
+<div class="main student-detail" id="detail-view">
+  <div class="detail-header">
+    <div class="detail-back" onclick="showHome()">←</div>
+    <div class="detail-info">
+      <div class="detail-name" id="d-name"></div>
+      <div class="detail-sub">
+        <span id="d-grade"></span>
+        <span>·</span>
+        <span id="d-teacher"></span>
+        <span>·</span>
+        <div class="progress-bar" style="width:120px;margin-bottom:0">
+          <div class="progress-fill" id="d-progress-bar" style="width:0%"></div>
+        </div>
+        <span id="d-progress-text" style="font-size:12px;color:var(--accent)"></span>
+      </div>
+    </div>
+    <div class="detail-actions">
+      <button class="btn btn-sm" onclick="editStudent()">✏️ 기본정보</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteStudent()">삭제</button>
+    </div>
+  </div>
+
+  <div class="detail-layout">
+    <!-- 왼쪽 -->
+    <div class="detail-left">
+      <!-- 커리큘럼 -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">📅 커리큘럼</div>
+          <button class="btn btn-sm btn-ghost" onclick="addRow('curriculum')">+ 추가</button>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>기간</th>
+                <th>내용/목표</th>
+                <th>상태</th>
+                <th style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="curriculum-tbody"></tbody>
+          </table>
+          <div class="table-add-row" onclick="addRow('curriculum')">＋ 커리큘럼 추가</div>
+        </div>
+      </div>
+
+      <!-- 수업일지 -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">📚 수업일지</div>
+          <button class="btn btn-sm btn-ghost" onclick="addRow('lessons')">+ 추가</button>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>날짜</th>
+                <th>수업내용</th>
+                <th>과제</th>
+                <th style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="lessons-tbody"></tbody>
+          </table>
+          <div class="table-add-row" onclick="addRow('lessons')">＋ 수업 기록 추가</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 오른쪽 -->
+    <div class="detail-right">
+      <!-- 메모/특이사항 -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">⚠️ 메모 / 특이사항</div>
+          <button class="btn btn-sm btn-ghost" onclick="addRow('notes')">+ 추가</button>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>날짜</th>
+                <th>내용</th>
+                <th style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="notes-tbody"></tbody>
+          </table>
+          <div class="table-add-row" onclick="addRow('notes')">＋ 메모 추가</div>
+        </div>
+      </div>
+
+      <!-- 상담 -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">💬 상담</div>
+          <button class="btn btn-sm btn-ghost" onclick="addRow('consults')">+ 추가</button>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>날짜</th>
+                <th>상담내용</th>
+                <th>전달사항</th>
+                <th style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="consults-tbody"></tbody>
+          </table>
+          <div class="table-add-row" onclick="addRow('consults')">＋ 상담 기록 추가</div>
+        </div>
+      </div>
+
+      <!-- 교재 -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">📖 교재</div>
+          <button class="btn btn-sm btn-ghost" onclick="addRow('books')">+ 추가</button>
+        </div>
+        <div class="section-card-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>교재명</th>
+                <th>현재 범위</th>
+                <th>상태</th>
+                <th style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="books-tbody"></tbody>
+          </table>
+          <div class="table-add-row" onclick="addRow('books')">＋ 교재 추가</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 학생 추가/수정 모달 -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title">학생 추가</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>이름</label>
+        <input type="text" id="f-name" placeholder="홍길동">
+      </div>
+      <div class="form-group">
+        <label>학교/학년</label>
+        <input type="text" id="f-grade" placeholder="고3 재수">
+      </div>
+      <div class="form-group">
+        <label>담당 강사</label>
+        <select id="f-teacher">
+          <option value="원경T">원경T</option>
+          <option value="원영T">원영T</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>오늘 수업 여부</label>
+        <select id="f-today">
+          <option value="false">수업 없음</option>
+          <option value="true">오늘 수업</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>진도 현황</label>
+        <div class="progress-input-wrap">
+          <input type="range" id="f-progress" min="0" max="100" value="0"
+            oninput="document.getElementById('f-progress-num').textContent=this.value+'%'">
+          <span class="progress-num" id="f-progress-num">0%</span>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>진도 설명 (예: 수학II 3단원 진행중)</label>
+        <input type="text" id="f-progress-label" placeholder="수학II 60% 완료">
+      </div>
+      <div class="form-group full">
+        <label>이번달 목표</label>
+        <input type="text" id="f-goal" placeholder="킬러 문항 집중 / 확통드릴 완성">
+      </div>
+      <div class="form-group">
+        <label>주 사용 교재</label>
+        <input type="text" id="f-book" placeholder="확통 드릴 2권">
+      </div>
+      <div class="form-group">
+        <label>특이사항</label>
+        <input type="text" id="f-special" placeholder="집중력 저하 주의">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveStudent()">저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+const GAS_KEY = 'beomeo_gas_url';
+let GAS_URL = localStorage.getItem(GAS_KEY) || 'https://script.google.com/macros/s/AKfycbw4tuYzIEU9F8kPB9_gjfCpSFEDGKvy2L3S8xKW1XgRf9PrhHI5S5QePJPufizSA9NX/exec';
+
+let DB = {
+  students: [],
+  notice: '공지 내용을 입력하세요.',
+};
+
+let currentStudentId = null;
+let syncTimer = null;
+let editingStudentId = null;
+
+// ─── DB 로드/저장 ───
+function loadDB() {
+  const s = localStorage.getItem('beomeo_v2');
+  if (s) DB = JSON.parse(s);
+}
+function saveDB() {
+  localStorage.setItem('beomeo_v2', JSON.stringify(DB));
+  schedulSync();
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function today() { return new Date().toISOString().slice(0,10); }
+function todayDisplay() {
+  const d = new Date();
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+
+// ─── 자동 동기화 ───
+function schedulSync() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncToSheets, 2000); // 2초 후 자동 저장
+}
+async function syncToSheets() {
+  if (!GAS_URL) return;
+  setSyncStatus('syncing', '동기화 중...');
+  try {
+    await fetch(GAS_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'save', data: DB })
+    });
+    setSyncStatus('ok', '동기화 완료 ' + new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}));
+  } catch(e) {
+    setSyncStatus('err', '동기화 실패');
+  }
+}
+async function loadFromSheets() {
+  if (!GAS_URL) return;
+  setSyncStatus('syncing', '불러오는 중...');
+  try {
+    const r = await fetch(GAS_URL + '?t=' + Date.now());
+    const d = await r.json();
+    if (d.data) {
+      DB = d.data;
+      localStorage.setItem('beomeo_v2', JSON.stringify(DB));
+    }
+    setSyncStatus('ok', '불러오기 완료');
+    renderAll();
+  } catch(e) {
+    setSyncStatus('err', '불러오기 실패');
+  }
+}
+function setSyncStatus(state, text) {
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-text');
+  txt.textContent = text;
+  dot.className = 'sync-dot' + (state === 'syncing' ? ' syncing' : '');
+  dot.style.background = state === 'ok' ? 'var(--green)' : state === 'err' ? 'var(--red)' : 'var(--yellow)';
+}
+
+// ═══════════════════════════════════════════
+//  공지
+// ═══════════════════════════════════════════
+function toggleNoticeEdit() {
+  const content = document.getElementById('notice-content');
+  const input = document.getElementById('notice-input');
+  const isEditing = input.style.display !== 'none';
+  if (isEditing) {
+    saveNotice();
+  } else {
+    input.value = DB.notice || '';
+    input.style.display = 'block';
+    content.style.display = 'none';
+    input.focus();
+  }
+}
+function saveNotice() {
+  const input = document.getElementById('notice-input');
+  const content = document.getElementById('notice-content');
+  DB.notice = input.value || '공지 내용을 입력하세요.';
+  content.textContent = DB.notice;
+  input.style.display = 'none';
+  content.style.display = 'block';
+  saveDB();
+}
+
+// ═══════════════════════════════════════════
+//  카드 렌더링
+// ═══════════════════════════════════════════
+function renderCards() {
+  const teacher = document.getElementById('filter-teacher').value;
+  const students = DB.students.filter(s => !teacher || s.teacher === teacher);
+  const todayStudents = students.filter(s => s.hasToday);
+  const allStudents = students;
+
+  // 오늘 수업 섹션
+  const todayGrid = document.getElementById('today-grid');
+  const todaySection = document.getElementById('today-section');
+  document.getElementById('today-count').textContent = todayStudents.length + '명';
+  if (todayStudents.length === 0) {
+    todaySection.style.display = 'none';
+  } else {
+    todaySection.style.display = 'block';
+    todayGrid.innerHTML = todayStudents.map(s => renderCard(s, true)).join('');
+  }
+
+  // 전체 학생
+  const allGrid = document.getElementById('all-grid');
+  document.getElementById('all-count').textContent = allStudents.length + '명';
+  if (allStudents.length === 0) {
+    allGrid.innerHTML = `<div class="add-card" onclick="openAddStudent()"><span style="font-size:20px">+</span> 첫 학생 추가하기</div>`;
+  } else {
+    allGrid.innerHTML = allStudents.map(s => renderCard(s, false)).join('') +
+      `<div class="add-card" onclick="openAddStudent()"><span style="font-size:18px">+</span> 학생 추가</div>`;
+  }
+
+  // 공지 업데이트
+  document.getElementById('notice-content').textContent = DB.notice || '공지 내용을 입력하세요.';
+}
+
+function renderCard(s, isToday) {
+  const progress = s.progress || 0;
+  return `
+  <div class="student-card${isToday ? ' today' : ''}" onclick="showDetail('${s.id}')">
+    <div class="card-header">
+      <div>
+        <div class="card-name">${s.name}</div>
+        <div class="card-meta">
+          <span>${s.grade || ''}</span>
+          ${s.teacher ? `<span class="card-teacher">${s.teacher}</span>` : ''}
+        </div>
+      </div>
+    </div>
+    <div class="card-progress-label">
+      <span style="font-size:11px;color:var(--text2)">${s.progressLabel || '진도 현황'}</span>
+      <span style="font-size:12px;color:var(--accent);font-weight:600">${progress}%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:${progress}%"></div>
+    </div>
+    ${s.goal ? `<div class="card-goal">🎯 <span>${s.goal}</span></div>` : ''}
+    ${s.book ? `<div class="card-row"><span class="card-row-label">📖</span><span>${s.book}</span></div>` : ''}
+    ${s.special ? `<div class="card-special">⚠️ ${s.special}</div>` : ''}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+//  학생 추가/수정 모달
+// ═══════════════════════════════════════════
+function openAddStudent() {
+  editingStudentId = null;
+  document.getElementById('modal-title').textContent = '학생 추가';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-grade').value = '';
+  document.getElementById('f-teacher').value = '원경T';
+  document.getElementById('f-today').value = 'false';
+  document.getElementById('f-progress').value = 0;
+  document.getElementById('f-progress-num').textContent = '0%';
+  document.getElementById('f-progress-label').value = '';
+  document.getElementById('f-goal').value = '';
+  document.getElementById('f-book').value = '';
+  document.getElementById('f-special').value = '';
+  document.getElementById('modal-bg').classList.add('open');
+}
+function editStudent() {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  editingStudentId = s.id;
+  document.getElementById('modal-title').textContent = '학생 정보 수정';
+  document.getElementById('f-name').value = s.name || '';
+  document.getElementById('f-grade').value = s.grade || '';
+  document.getElementById('f-teacher').value = s.teacher || '원경T';
+  document.getElementById('f-today').value = s.hasToday ? 'true' : 'false';
+  document.getElementById('f-progress').value = s.progress || 0;
+  document.getElementById('f-progress-num').textContent = (s.progress || 0) + '%';
+  document.getElementById('f-progress-label').value = s.progressLabel || '';
+  document.getElementById('f-goal').value = s.goal || '';
+  document.getElementById('f-book').value = s.book || '';
+  document.getElementById('f-special').value = s.special || '';
+  document.getElementById('modal-bg').classList.add('open');
+}
+function saveStudent() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('이름을 입력하세요'); return; }
+  const data = {
+    name,
+    grade: document.getElementById('f-grade').value.trim(),
+    teacher: document.getElementById('f-teacher').value,
+    hasToday: document.getElementById('f-today').value === 'true',
+    progress: parseInt(document.getElementById('f-progress').value),
+    progressLabel: document.getElementById('f-progress-label').value.trim(),
+    goal: document.getElementById('f-goal').value.trim(),
+    book: document.getElementById('f-book').value.trim(),
+    special: document.getElementById('f-special').value.trim(),
+  };
+  if (editingStudentId) {
+    const idx = DB.students.findIndex(x => x.id === editingStudentId);
+    DB.students[idx] = { ...DB.students[idx], ...data };
+    // 상세 뷰 업데이트
+    if (currentStudentId === editingStudentId) updateDetailHeader();
+  } else {
+    DB.students.push({ id: uid(), ...data, curriculum:[], lessons:[], notes:[], consults:[], books:[] });
+  }
+  closeModal();
+  saveDB();
+  renderCards();
+}
+function deleteStudent() {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  if (!confirm(`${s.name} 학생을 삭제할까요?`)) return;
+  DB.students = DB.students.filter(x => x.id !== currentStudentId);
+  saveDB();
+  showHome();
+}
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════
+//  학생 상세 뷰
+// ═══════════════════════════════════════════
+function showDetail(id) {
+  currentStudentId = id;
+  document.getElementById('home-view').classList.add('hidden');
+  document.getElementById('detail-view').classList.add('active');
+  updateDetailHeader();
+  renderDetailTables();
+}
+function showHome() {
+  document.getElementById('home-view').classList.remove('hidden');
+  document.getElementById('detail-view').classList.remove('active');
+  currentStudentId = null;
+  renderCards();
+}
+function updateDetailHeader() {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  document.getElementById('d-name').textContent = s.name;
+  document.getElementById('d-grade').textContent = s.grade || '';
+  document.getElementById('d-teacher').textContent = s.teacher || '';
+  document.getElementById('d-progress-bar').style.width = (s.progress || 0) + '%';
+  document.getElementById('d-progress-text').textContent = (s.progress || 0) + '%';
+}
+
+// ─── 표 렌더링 ───
+function renderDetailTables() {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+
+  // 커리큘럼
+  renderTable('curriculum-tbody', s.curriculum || [], [
+    { key:'period', placeholder:'예) 5월', cls:'date' },
+    { key:'content', placeholder:'수업 내용 / 목표' },
+    { key:'status', type:'select', options:['진행중','완료','예정'] },
+  ], 'curriculum');
+
+  // 수업일지
+  renderTable('lessons-tbody', s.lessons || [], [
+    { key:'date', placeholder:todayDisplay(), cls:'date' },
+    { key:'content', placeholder:'수업 내용' },
+    { key:'homework', placeholder:'과제' },
+  ], 'lessons');
+
+  // 메모
+  renderTable('notes-tbody', s.notes || [], [
+    { key:'date', placeholder:todayDisplay(), cls:'date' },
+    { key:'content', placeholder:'내용' },
+  ], 'notes');
+
+  // 상담
+  renderTable('consults-tbody', s.consults || [], [
+    { key:'date', placeholder:todayDisplay(), cls:'date' },
+    { key:'content', placeholder:'상담 내용' },
+    { key:'memo', placeholder:'전달사항' },
+  ], 'consults');
+
+  // 교재
+  renderTable('books-tbody', s.books || [], [
+    { key:'title', placeholder:'교재명' },
+    { key:'range', placeholder:'현재 범위' },
+    { key:'status', type:'select', options:['진행중','완료','예정'] },
+  ], 'books');
+}
+
+function renderTable(tbodyId, rows, cols, section) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = rows.map((row, i) => `
+    <tr>
+      ${cols.map(col => {
+        if (col.type === 'select') {
+          return `<td>
+            <select onchange="updateCell('${section}',${i},'${col.key}',this.value)" style="background:transparent;border:none;color:var(--text);font-family:inherit;font-size:13px;outline:none;cursor:pointer;width:100%">
+              ${col.options.map(o => `<option${row[col.key]===o?' selected':''}>${o}</option>`).join('')}
+            </select>
+          </td>`;
+        }
+        return `<td class="${col.cls||''}">
+          <input type="text" value="${(row[col.key]||'').replace(/"/g,'&quot;')}"
+            placeholder="${col.placeholder||''}"
+            oninput="updateCell('${section}',${i},'${col.key}',this.value)"
+            style="background:transparent;border:none;color:var(--text);font-family:inherit;font-size:13px;outline:none;width:100%">
+        </td>`;
+      }).join('')}
+      <td style="width:30px;text-align:center">
+        <button class="del-row" onclick="deleteRow('${section}',${i})">×</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updateCell(section, idx, key, val) {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  if (!s[section]) s[section] = [];
+  s[section][idx][key] = val;
+  saveDB();
+}
+
+function addRow(section) {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  if (!s[section]) s[section] = [];
+  const defaults = {
+    curriculum: { period:'', content:'', status:'진행중' },
+    lessons: { date:todayDisplay(), content:'', homework:'' },
+    notes: { date:todayDisplay(), content:'' },
+    consults: { date:todayDisplay(), content:'', memo:'' },
+    books: { title:'', range:'', status:'진행중' },
+  };
+  s[section].unshift({ ...defaults[section] });
+  saveDB();
+  renderDetailTables();
+}
+
+function deleteRow(section, idx) {
+  const s = DB.students.find(x => x.id === currentStudentId);
+  if (!s) return;
+  s[section].splice(idx, 1);
+  saveDB();
+  renderDetailTables();
+}
+
+// ═══════════════════════════════════════════
+//  초기화
+// ═══════════════════════════════════════════
+function renderAll() {
+  renderCards();
+}
+
+// 페이지 로드
+loadDB();
+// 앱 시작시 Google Sheets에서 최신 데이터 불러오기
+loadFromSheets().then(() => renderAll()).catch(() => renderAll());
+</script>
+</body>
+</html>
